@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"io/ioutil"
 	"log"
+	"math"
 	"os"
 	"path"
 	"path/filepath"
@@ -199,7 +200,7 @@ func Convert(s string, locale string) string {
 				maxWord = matchWord
 			}
 			i += 1
-			frag = string(sRune[pos : i+1])
+			frag = string(sRune[pos:int(math.Min(float64(i+1), float64(N)))])
 		}
 		if maxWord == "" {
 			maxWord = string(sRune[pos])
