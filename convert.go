@@ -5,7 +5,11 @@ import (
 	"errors"
 	"fmt"
 	"io/ioutil"
+	"log"
 	"os"
+	"path"
+	"path/filepath"
+	"runtime"
 	"strings"
 )
 
@@ -43,9 +47,37 @@ var zhHANTDICT map[string]string
 var zhHANSDICT map[string]string
 var pfsDICT map[string][]string
 
+func getCurrentAbPath() string {
+	dir := getCurrentAbPathByExecutable()
+	tmpDir, _ := filepath.EvalSymlinks(os.TempDir())
+	if strings.Contains(dir, tmpDir) {
+		return getCurrentAbPathByCaller()
+	}
+	return dir
+}
+
+func getCurrentAbPathByExecutable() string {
+	exePath, err := os.Executable()
+	if err != nil {
+		log.Fatal(err)
+	}
+	res, _ := filepath.EvalSymlinks(filepath.Dir(exePath))
+	return res
+}
+
+func getCurrentAbPathByCaller() string {
+	var abPath string
+	_, filename, _, ok := runtime.Caller(0)
+	if ok {
+		abPath = path.Dir(filename)
+	}
+	return abPath
+}
+
 func loadDict(zhdata *map[string]interface{}) {
-	pwd, _ := os.Getwd()
-	content, err := ioutil.ReadFile(fmt.Sprintf("%s/%s", pwd, dictPath))
+	pwd := getCurrentAbPath()
+	fileName := fmt.Sprintf("%s/%s", pwd, dictPath)
+	content, err := ioutil.ReadFile(fileName)
 	if err != nil {
 		panic(errors.New(fmt.Sprintf("can`t load file from %s", dictPath)))
 	}
