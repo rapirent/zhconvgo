@@ -8,7 +8,7 @@ import (
 	"strings"
 )
 
-const dictPath = "./zhcdict.json"
+const dictPath = "zhcdict.json"
 const (
 	ZHCN   = "zh-cn"
 	ZHHK   = "zh-hk"
