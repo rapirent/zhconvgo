@@ -5,6 +5,7 @@ import (
 	"errors"
 	"fmt"
 	"io/ioutil"
+	"os"
 	"strings"
 )
 
@@ -43,7 +44,8 @@ var zhHANSDICT map[string]string
 var pfsDICT map[string][]string
 
 func loadDict(zhdata *map[string]interface{}) {
-	content, err := ioutil.ReadFile(dictPath)
+	pwd, _ := os.Getwd()
+	content, err := ioutil.ReadFile(fmt.Sprintf("%s/%s", pwd, dictPath))
 	if err != nil {
 		panic(errors.New(fmt.Sprintf("can`t load file from %s", dictPath)))
 	}
