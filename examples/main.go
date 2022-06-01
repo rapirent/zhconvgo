@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 
-	"github.com/DCRcoder/zhconvgo"
+	"github.com/rapirent/zhconvgo"
 )
 
 func main() {

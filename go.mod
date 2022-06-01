@@ -1,3 +1,3 @@
-module github.com/DCRcoder/zhconvgo
+module github.com/rapirent/zhconvgo
 
-go 1.16
+go 1.18

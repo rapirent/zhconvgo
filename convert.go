@@ -76,7 +76,8 @@ func getCurrentAbPathByCaller() string {
 }
 
 func loadDict(zhdata *map[string]interface{}) {
-	pwd := getCurrentAbPath()
+    _, filename, _, _ := runtime.Caller(0)
+    pwd := path.Dir(filename)
 	fileName := fmt.Sprintf("%s/%s", pwd, dictPath)
 	content, err := ioutil.ReadFile(fileName)
 	if err != nil {
